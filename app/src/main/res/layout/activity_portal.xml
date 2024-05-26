@@ -30,4 +30,13 @@
         android:layout_marginBottom="16dp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="11dp"
+        android:layout_marginBottom="16dp"
+        android:text="Añadir camion" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

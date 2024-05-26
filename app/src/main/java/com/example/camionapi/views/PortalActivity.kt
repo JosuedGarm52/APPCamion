@@ -32,6 +32,26 @@ class PortalActivity : AppCompatActivity() {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fab).show()
         }
+
+        binding.btnAdd.setOnClickListener {view ->
+            val currentDestinationId = findNavController(R.id.nav_host_fragment_content_portal).currentDestination?.id
+
+            // Verifica el fragmento actual y realiza la acción correspondiente
+            when (currentDestinationId) {
+                R.id.FirstFragment -> {
+                    findNavController(R.id.nav_host_fragment_content_portal).navigate(R.id.action_FirstFragment_to_SecondFragment)
+
+                }
+                R.id.SecondFragment -> {
+                    findNavController(R.id.nav_host_fragment_content_portal).navigate(R.id.action_SecondFragment_to_FirstFragment)
+
+                }
+                else -> {
+                    Snackbar.make(view, "Pulsa otro boton", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                }
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
