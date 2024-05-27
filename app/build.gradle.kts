@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlinKapt)
+    id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -56,7 +59,6 @@ dependencies {
     androidTestImplementation(libs.androidxJunit)
     androidTestImplementation(libs.androidxEspressoCore)
 
-
     // Room dependencies
     implementation(libs.roomRuntime)
     implementation(libs.roomKtx)
@@ -69,5 +71,16 @@ dependencies {
     implementation(libs.converter.gson)
 
     implementation(libs.glide)
+
+    val lifeCycle = "2.7.0"
+
+    // Lifecycle components
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycle")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifeCycle")
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifeCycle")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycle")
+
+    // To use Kotlin Symbol Processing (KSP)
+    //ksp("androidx.room:room-compiler:$room_version")
 }
 
