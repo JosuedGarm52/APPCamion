@@ -11,15 +11,13 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 
 class CombinedCamionRepository(
-    //private val retrofitApi: CamionApi,
+    private val retrofitApi: CamionApi,
     private val localRepository: CamionRepository
 ) {
     // Método para obtener todos los camiones, primero intenta obtenerlos de la API,
     // si falla, los obtiene de la base de datos local
-    //val allCamionKardex: Flow<List<CamionItem>> = localRepository.allCamionKardex
-
     suspend fun getAllCamiones(): Flow<List<CamionItem>> {
-        /*
+
         try {
             val response = retrofitApi.getAllCamiones()
             if (response.isSuccessful) {
@@ -27,7 +25,7 @@ class CombinedCamionRepository(
             }
         } catch (e: Exception) {
             Log.e("API", "Error fetching data from API: ${e.message}")
-        }*/
+        }
         // Si falla la llamada a la API o no hay datos, obtiene los datos de la base de datos local
         return localRepository.allCamionKardex ?: flowOf(emptyList())
     }

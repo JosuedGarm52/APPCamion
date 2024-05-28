@@ -72,10 +72,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
         android:layout_marginTop="36dp"
-        android:layout_marginEnd="173dp"
         android:text="tvMarca"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvMatricula"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,12 +83,12 @@
         android:id="@+id/tvModelo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="105dp"
         android:text="tvModelo"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvConductor"
         app:layout_constraintTop_toBottomOf="@+id/tvMarca" />
 
@@ -98,9 +98,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginTop="76dp"
-        android:layout_marginEnd="153dp"
         android:text="tvDimension"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvColor"
         app:layout_constraintTop_toTopOf="parent" />
 
