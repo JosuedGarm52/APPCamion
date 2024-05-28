@@ -34,14 +34,6 @@ class SecondFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    /*
-    val combinedRepository = (requireActivity().application as CamionApplication).combinedRepository
-
-    val secondFragmentViewModel: SecondFragmentViewModel by viewModels {
-        SecondFragmentViewModelFactory(combinedRepository)
-    }
-    */
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +48,7 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*
+
         val args: SecondFragmentArgs by navArgs()
 
         // Obtener el Spinner desde el layout
@@ -72,6 +64,11 @@ class SecondFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Aplicar el adaptador al spinner
             spinner.adapter = adapter
+        }
+
+        val combinedRepository = (requireActivity().application as CamionApplication).combinedRepository
+        val secondFragmentViewModel: SecondFragmentViewModel by viewModels {
+            SecondFragmentViewModelFactory(combinedRepository)
         }
 
         //binding.edtID.isEnabled = true
@@ -168,7 +165,7 @@ class SecondFragment : Fragment() {
             }
         }
 
-         */
+
     }
 
     override fun onDestroyView() {

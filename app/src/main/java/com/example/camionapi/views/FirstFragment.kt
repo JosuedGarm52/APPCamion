@@ -33,7 +33,6 @@ class FirstFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private lateinit var combinedRepository: CombinedCamionRepository
 
     val firstFragmentViewModel: FirstFragmentViewModel by viewModels {
         FirstFragmentViewModelFactory((requireActivity().application as CamionApplication).combinedRepository)
@@ -54,17 +53,22 @@ class FirstFragment : Fragment() {
         val adapter = CamionAdapter { camion ->
             onItemClick(camion)
         }
-        /*
+
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        firstFragmentViewModel.camionKardex.observe(viewLifecycleOwner,
-            Observer { camiones ->
-                camiones?.let {
-                    adapter.submitList(it)
-                }
-            })
-         */
+        try{
+            firstFragmentViewModel.camionKardex.observe(viewLifecycleOwner,
+                Observer { camiones ->
+                    camiones?.let {
+                        adapter.submitList(it)
+                    }
+                })
+        }catch(e: Exception){
+            Log.e("FirstFragment", "Error al observar camionKardex: ${e.message}", e)
+        }
+
+
     }
 
     private fun onItemClick(it: CamionItem) {

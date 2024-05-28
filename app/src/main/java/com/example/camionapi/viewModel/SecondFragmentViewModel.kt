@@ -14,21 +14,19 @@ class SecondFragmentViewModel (private val repository: CombinedCamionRepository)
 
     fun insertCamion(camion: CamionItem) = viewModelScope.launch{
         //Log.d("TAG", "Paso por aqui")
-        //repository.addCamion(camion)
+        repository.addCamion(camion)
     }
-    //fun getCamionById(id: Int): LiveData<CamionItem?> {
-        /*
+    fun getCamionById(id: Int): LiveData<CamionItem?> {
+
         return liveData {
             emit(repository.getCamionById(id))
         }
-        */
-
-    //}
+    }
     fun updateCamion(camion: CamionItem) = viewModelScope.launch {
-        //repository.updateCamion(camion)
+        repository.updateCamion(camion)
     }
     fun deleteCamionById(id: Int) = viewModelScope.launch {
-        //repository.deleteCamionById(id)
+        repository.deleteCamionById(id)
     }
 }
 

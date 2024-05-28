@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.camionapi.models.camion.Camion
 import com.example.camionapi.models.camion.CamionDao
+import com.example.camionapi.models.camion.CamionItem
 
-@Database(entities = [Camion::class], version = 1)
+@Database(entities = [CamionItem::class], version = 1)
 abstract class CamionDatabase : RoomDatabase() {
     abstract fun camionDAO(): CamionDao
 

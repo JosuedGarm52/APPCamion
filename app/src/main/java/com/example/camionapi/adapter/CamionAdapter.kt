@@ -25,13 +25,13 @@ class CamionAdapter(private val xyz: (CamionItem) -> Unit) : ListAdapter<CamionI
         fun bind(Camion: CamionItem){
             tvID.text = "Camion N°: "+Camion.ID.toString()
             tvMatricula.text = "Matricula: "+ Camion.matricula
-            tvColor.text = "Color" + Camion.color
+            tvColor.text = "Color: " + Camion.color
             tvYear.text = "Años: "+ Camion.yearOperative.toString()
             tvConductor.text = "Conductor: " + Camion.conductor
             tvMarca.text  = "Marca:" + Camion.marca
             tvModelo.text = "Modelo: " + Camion.modelo
             tvDimension.text = "Dimensiones: " + Camion.dimension
-            tvTipo.text  = "Tipo" + Camion.tipo
+            tvTipo.text  = "Tipo: " + Camion.tipo
 
             itemView.setOnClickListener{
                 xyz(Camion)
