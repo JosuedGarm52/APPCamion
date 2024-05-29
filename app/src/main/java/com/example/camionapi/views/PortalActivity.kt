@@ -1,6 +1,8 @@
 package com.example.camionapi.views
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -70,6 +72,29 @@ class PortalActivity : AppCompatActivity() {
         } else {
             imageView.setImageResource(R.drawable.bad_signal) // Imagen para conexión fallida
         }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_refresh -> {
+                // Lógica para refrescar
+                true
+            }
+            R.id.action_delete_local_db -> {
+                // Lógica para borrar la base de datos local
+                true
+            }
+            R.id.action_settings -> {
+                // Lógica para abrir la pantalla de ajustes
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {

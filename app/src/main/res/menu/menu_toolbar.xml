@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_refresh"
+        android:title="Refrescar"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_delete_local_db"
+        android:title="Borrar BD local"
+        app:showAsAction="never" /> <!-- Esta opción no se muestra directamente, solo aparecerá en el menú desplegable -->
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="Ajustes"
+        app:showAsAction="never" /> <!-- Esta opción tampoco se muestra directamente -->
+</menu>
