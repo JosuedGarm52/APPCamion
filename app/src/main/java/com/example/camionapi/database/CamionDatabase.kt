@@ -31,4 +31,10 @@ abstract class CamionDatabase : RoomDatabase() {
             }
         }
     }
+
+    // Método para eliminar la base de datos
+    fun deleteDatabase(context: Context) {
+        context.deleteDatabase("Camion_database")
+        INSTANCE = null // Establecer INSTANCE en null para que se cree una nueva instancia la próxima vez que se solicite la base de datos
+    }
 }

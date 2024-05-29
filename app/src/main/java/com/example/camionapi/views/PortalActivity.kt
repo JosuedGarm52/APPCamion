@@ -3,21 +3,33 @@ package com.example.camionapi.views
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.camionapi.R
+import com.example.camionapi.application.CamionApplication
 import com.example.camionapi.databinding.ActivityPortalBinding
 import com.example.camionapi.utils.MyAppConfig
+import com.example.camionapi.viewModel.FirstFragmentViewModel
+import com.example.camionapi.viewModel.FirstFragmentViewModelFactory
+import com.example.camionapi.viewModel.MainActivityViewModel
+import com.example.camionapi.viewModel.MainActivityViewModelFactory
+import com.example.camionapi.viewModel.PortalActivityViewModel
+import com.example.camionapi.viewModel.PortalActivityViewModelFactory
 
 class PortalActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPortalBinding
+
+    private lateinit var portalActivityViewModel: PortalActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +70,11 @@ class PortalActivity : AppCompatActivity() {
         }
         // Observa cambios en isConect y actualiza la imagen
         observeConnectionStatus()
+
+        val combinedRepository = (application as CamionApplication).combinedRepository
+        val camionDatabase = (application as CamionApplication).database
+        portalActivityViewModel = ViewModelProvider(this, PortalActivityViewModelFactory(combinedRepository, camionDatabase))
+            .get(PortalActivityViewModel::class.java)
     }
     private fun observeConnectionStatus() {
         MyAppConfig.isConect.observe(this, Observer { connected ->
@@ -77,6 +94,7 @@ class PortalActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_refresh -> {
                 // Lógica para refrescar
+                portalActivityViewModel.isConnected()
                 true
             }
             R.id.action_delete_local_db -> {

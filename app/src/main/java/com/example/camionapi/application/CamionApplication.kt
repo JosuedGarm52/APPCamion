@@ -13,4 +13,5 @@ class CamionApplication : Application() {
     val combinedRepository by lazy { CombinedCamionRepository(
         retrofitApi,
         localRepository) }
+
 }
