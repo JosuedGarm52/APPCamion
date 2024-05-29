@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.camionapi.models.camion.CamionDao
 import com.example.camionapi.models.camion.CamionItem
 import com.example.camionapi.network.CamionApi
+import com.example.camionapi.utils.MyAppConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.firstOrNull
@@ -30,6 +31,19 @@ class CombinedCamionRepository(
         return localRepository.allCamionKardex ?: flowOf(emptyList())
     }
 
+    suspend fun checkConnection(): Boolean {
+        try {
+            val response = retrofitApi.getAllCamiones()
+            if (response.isSuccessful) {
+                MyAppConfig.setConnectionStatus(true) // Cambia el valor de isConect a true si la llamada es exitosa
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e("API", "Error fetching data from API: ${e.message}")
+        }
+        MyAppConfig.setConnectionStatus(false) // En caso de error, establece isConect en false
+        return false
+    }
 
 
     suspend fun getCamionById(id: Int): CamionItem? {
@@ -44,6 +58,7 @@ class CombinedCamionRepository(
         }
          */
         // Si falla la llamada a la API, busca en la base de datos local
+        MyAppConfig.setConnectionStatus(false)
         return localRepository.getCamionById(id)
     }
 
@@ -59,6 +74,7 @@ class CombinedCamionRepository(
         }
          */
         // Si falla la llamada a la API, no se puede agregar el camión
+        MyAppConfig.setConnectionStatus(false)
         localRepository.insert(camion)
         return null
     }
@@ -75,6 +91,7 @@ class CombinedCamionRepository(
         }
          */
         // Si falla la llamada a la API, no se puede actualizar el camión
+        MyAppConfig.setConnectionStatus(false)
         localRepository.update(camion)
         return null
     }
@@ -91,6 +108,7 @@ class CombinedCamionRepository(
         }
          */
         // Si falla la llamada a la API, no se puede eliminar el camión
+        MyAppConfig.setConnectionStatus(false)
         localRepository.deleteCamionById(id)
         return false
     }

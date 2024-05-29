@@ -3,12 +3,14 @@ package com.example.camionapi.views
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.camionapi.R
 import com.example.camionapi.databinding.ActivityPortalBinding
+import com.example.camionapi.utils.MyAppConfig
 
 class PortalActivity : AppCompatActivity() {
 
@@ -51,6 +53,22 @@ class PortalActivity : AppCompatActivity() {
                         .setAction("Action", null).show()
                 }
             }
+        }
+        // Observa cambios en isConect y actualiza la imagen
+        observeConnectionStatus()
+    }
+    private fun observeConnectionStatus() {
+        MyAppConfig.isConect.observe(this, Observer { connected ->
+            updateConnectionStatus(connected)
+        })
+    }
+
+    private fun updateConnectionStatus(isConnected: Boolean) {
+        val imageView = binding.imgSignal
+        if (isConnected) {
+            imageView.setImageResource(R.drawable.signal) // Imagen para conexión exitosa
+        } else {
+            imageView.setImageResource(R.drawable.bad_signal) // Imagen para conexión fallida
         }
     }
 
