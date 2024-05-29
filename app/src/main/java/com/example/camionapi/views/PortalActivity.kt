@@ -43,6 +43,29 @@ class PortalActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        //viewModel
+        val combinedRepository = (application as CamionApplication).combinedRepository
+        val camionDatabase = (application as CamionApplication).database
+        val context = this
+        portalActivityViewModel = ViewModelProvider(this, PortalActivityViewModelFactory(combinedRepository, camionDatabase, context))
+            .get(PortalActivityViewModel::class.java)
+
+        // Observa cambios en el NavController
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            // Aquí puedes manejar los cambios en el fragmento actual
+            when (destination.id) {
+                R.id.FirstFragment -> {
+                    // Manejar cambios específicos para el FirstFragment
+                    portalActivityViewModel.isConnected()
+                }
+                R.id.SecondFragment -> {
+                    // Manejar cambios específicos para el SecondFragment
+                    portalActivityViewModel.isConnected()
+                }
+                // Agrega más casos según sea necesario para otros fragmentos
+            }
+        }
+
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
@@ -71,10 +94,7 @@ class PortalActivity : AppCompatActivity() {
         // Observa cambios en isConect y actualiza la imagen
         observeConnectionStatus()
 
-        val combinedRepository = (application as CamionApplication).combinedRepository
-        val camionDatabase = (application as CamionApplication).database
-        portalActivityViewModel = ViewModelProvider(this, PortalActivityViewModelFactory(combinedRepository, camionDatabase))
-            .get(PortalActivityViewModel::class.java)
+
     }
     private fun observeConnectionStatus() {
         MyAppConfig.isConect.observe(this, Observer { connected ->
@@ -99,6 +119,7 @@ class PortalActivity : AppCompatActivity() {
             }
             R.id.action_delete_local_db -> {
                 // Lógica para borrar la base de datos local
+                portalActivityViewModel.deleteDatabase()
                 true
             }
             R.id.action_settings -> {

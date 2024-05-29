@@ -9,22 +9,32 @@ import com.example.camionapi.repository.CombinedCamionRepository
 import com.example.camionapi.utils.MyAppConfig
 import kotlinx.coroutines.launch
 
-class PortalActivityViewModel(private val repository: CombinedCamionRepository, private val camionDatabase: CamionDatabase): ViewModel() {
+class PortalActivityViewModel(
+    private val repository: CombinedCamionRepository,
+    private val camionDatabase: CamionDatabase,
+    private val context: Context): ViewModel() {
     fun isConnected() = viewModelScope.launch {
         repository.checkConnection()
     }
 
-    fun deleteDatabase(context: Context) {
-        camionDatabase.deleteDatabase(context)
+    fun deleteDatabase() {
+        viewModelScope.launch {
+            camionDatabase.deleteDatabase(context)
+        }
     }
 }
 
-class PortalActivityViewModelFactory(private val repository: CombinedCamionRepository, private val camionDatabase: CamionDatabase) : ViewModelProvider.Factory {
+class PortalActivityViewModelFactory(
+    private val repository: CombinedCamionRepository,
+    private val camionDatabase: CamionDatabase,
+    private val context: Context
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PortalActivityViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return PortalActivityViewModel(repository, camionDatabase) as T
+            return PortalActivityViewModel(repository, camionDatabase, context) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
+
