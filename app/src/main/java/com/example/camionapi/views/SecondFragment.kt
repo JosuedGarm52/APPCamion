@@ -74,7 +74,6 @@ class SecondFragment : Fragment() {
         //binding.edtID.isEnabled = true
         binding.btnBorrar.isEnabled = true
         binding.btnBorrar.visibility = View.VISIBLE
-
         if(args.ID != 0){
             binding.btnGuardar.text = "Editar"
             secondFragmentViewModel.getCamionById(args.ID).observe(viewLifecycleOwner) { Camion ->
@@ -97,6 +96,8 @@ class SecondFragment : Fragment() {
                     }
                     spinner.setSelection(spinnerPosition)
                     binding.edtTipo.text = Editable.Factory.getInstance().newEditable(Camion.tipo)
+                }else{
+                    Snackbar.make(requireView(), "Error interno: datos no se pudieron cargar", Snackbar.LENGTH_SHORT).show()
                 }
             }
         }else{

@@ -1,5 +1,6 @@
 package com.example.camionapi.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -124,6 +125,12 @@ class PortalActivity : AppCompatActivity() {
             }
             R.id.action_settings -> {
                 // Lógica para abrir la pantalla de ajustes
+                true
+            }
+            R.id.action_logout -> {
+                // Lógica para abrir la pantalla de ajustes
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

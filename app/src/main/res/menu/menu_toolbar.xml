@@ -15,4 +15,8 @@
         android:id="@+id/action_settings"
         android:title="Ajustes"
         app:showAsAction="never" /> <!-- Esta opción tampoco se muestra directamente -->
+    <item
+        android:id="@+id/action_logout"
+        android:title="LOGOUT"
+        app:showAsAction="never" /> <!-- Esta opción tampoco se muestra directamente -->
 </menu>

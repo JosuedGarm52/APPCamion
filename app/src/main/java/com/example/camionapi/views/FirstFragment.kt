@@ -77,7 +77,7 @@ class FirstFragment : Fragment() {
         Log.d("FirstFragment", "onItem clic")
         Toast.makeText(requireContext(), "Clic al ${it.ID} matricula: ${it.matricula}", Toast.LENGTH_SHORT).show()
 
-        val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment()
+        val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment(it.ID)
         findNavController().navigate(action)
     }
 
