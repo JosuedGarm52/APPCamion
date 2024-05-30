@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import com.example.camionapi.models.camion.Camion
 import com.example.camionapi.models.camion.CamionDao
 import com.example.camionapi.models.camion.CamionItem
+import com.example.camionapi.models.camion.CamionRequest
 import kotlinx.coroutines.flow.Flow
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO

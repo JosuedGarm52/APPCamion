@@ -28,7 +28,7 @@ class CamionAdapter(private val xyz: (CamionItem) -> Unit) : ListAdapter<CamionI
             tvColor.text = "Color: " + Camion.color
             tvYear.text = "Años: "+ Camion.yearOperative.toString()
             tvConductor.text = "Conductor: " + Camion.conductor
-            tvMarca.text  = "Marca:" + Camion.marca
+            tvMarca.text  = "Marca: " + Camion.marca
             tvModelo.text = "Modelo: " + Camion.modelo
             tvDimension.text = "Dimensiones: " + Camion.dimension
             tvTipo.text  = "Tipo: " + Camion.tipo

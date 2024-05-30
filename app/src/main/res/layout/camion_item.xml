@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tvMatricula"
-        android:layout_width="99dp"
+        android:layout_width="152dp"
         android:layout_height="20dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="36dp"
@@ -23,8 +23,8 @@
 
     <TextView
         android:id="@+id/tvColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="123dp"
+        android:layout_height="18dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="302dp"
@@ -68,14 +68,14 @@
 
     <TextView
         android:id="@+id/tvMarca"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="113dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
         android:text="tvMarca"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.141"
         app:layout_constraintStart_toEndOf="@+id/tvMatricula"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,13 +94,11 @@
 
     <TextView
         android:id="@+id/tvDimension"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="174dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="64dp"
         android:text="tvDimension"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvColor"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,12 +107,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="104dp"
         android:text="tvTipo"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.307"
+        app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toEndOf="@+id/tvYear"
         app:layout_constraintTop_toBottomOf="@+id/tvDimension" />
 

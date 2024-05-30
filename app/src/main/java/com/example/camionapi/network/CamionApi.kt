@@ -2,6 +2,7 @@ package com.example.camionapi.network
 
 import com.example.camionapi.models.camion.CamionItem
 import com.example.camionapi.models.camion.Camion
+import com.example.camionapi.models.camion.CamionRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,10 +19,10 @@ interface CamionApi {
     suspend fun getCamionById(@Path("id") id: Int): Response<CamionItem>
 
     @POST("camion")
-    suspend fun addCamion(@Body camion: CamionItem): Response<CamionItem>
+    suspend fun addCamion(@Body camion: CamionRequest): Response<CamionRequest>
 
     @PUT("camion/{id}")
-    suspend fun updateCamion(@Path("id") id: Int, @Body camion: CamionItem): Response<CamionItem>
+    suspend fun updateCamion(@Path("id") id: Int, @Body camion: CamionRequest): Response<CamionRequest>
 
     @DELETE("camion/{id}")
     suspend fun deleteCamion(@Path("id") id: Int): Response<Void>

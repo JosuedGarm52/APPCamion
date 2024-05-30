@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.camionapi.models.camion.CamionDao
 import com.example.camionapi.models.camion.CamionItem
+import com.example.camionapi.models.camion.CamionRequest
 import com.example.camionapi.network.CamionApi
 import com.example.camionapi.utils.MyAppConfig
 import kotlinx.coroutines.flow.Flow
@@ -27,6 +28,8 @@ class CombinedCamionRepository(
             val response = retrofitApi.getAllCamiones()
             if (response.isSuccessful) {
                 return response.body()?.let { flowOf(it) } ?: flowOf(emptyList())
+            } else {
+                Log.e("API", "Response not successful: ${response.code()} - ${response.errorBody()?.string()}")
             }
         } catch (e: Exception) {
             Log.e("API", "Error fetching data from API: ${e.message}")
@@ -74,6 +77,8 @@ class CombinedCamionRepository(
                     isConectado = true
                     MyAppConfig.setConnectionStatus(true)
                     return response.body()
+                } else {
+                    Log.e("API", "Response not successful: ${response.code()} - ${response.errorBody()?.string()}")
                 }
             } catch (e: Exception) {
                 Log.e("API", "Error fetching data from API: ${e.message}")
@@ -86,54 +91,137 @@ class CombinedCamionRepository(
         }
     }
 
-    suspend fun addCamion(camion: CamionItem): CamionItem? {
-        /*
-        try {
-            val response = retrofitApi.addCamion(camion)
-            if (response.isSuccessful) {
-                return response.body()
+    suspend fun addCamion(camion: CamionRequest): CamionRequest? {
+        if(isConectado){
+            try {
+                val response = retrofitApi.addCamion(camion)
+                if (response.isSuccessful) {
+                    isConectado = true
+                    MyAppConfig.setConnectionStatus(true)
+                    return response.body()
+                } else {
+                    Log.e("API", "Response not successful: ${response.code()} - ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e("API", "Error fetching data from API: ${e.message}")
             }
-        } catch (e: Exception) {
-            Log.e("API", "Error fetching data from API: ${e.message}")
+            isConectado = false
+            MyAppConfig.setConnectionStatus(false)
+            return null
+        }else{
+            try {
+                val response = retrofitApi.addCamion(camion)
+                if (response.isSuccessful) {
+                    isConectado = true
+                    MyAppConfig.setConnectionStatus(true)
+                    return response.body()
+                }else {
+                    Log.e("API", "Response not successful: ${response.code()} - ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e("API", "Error fetching data from API: ${e.message}")
+            }
+            // Si falla la llamada a la API, no se puede agregar el camión
+            val camionItem = CamionItem(
+                ID = camion.ID,
+                color = camion.color,
+                conductor = camion.conductor,
+                dimension = camion.dimension,
+                marca = camion.marca,
+                matricula = camion.matricula,
+                modelo = camion.modelo,
+                tipo = camion.tipo,
+                yearOperative = camion.operativo
+            )
+            MyAppConfig.setConnectionStatus(false)
+            localRepository.insert(camionItem)
+            return null
         }
-         */
-        // Si falla la llamada a la API, no se puede agregar el camión
-        MyAppConfig.setConnectionStatus(false)
-        localRepository.insert(camion)
-        return null
     }
 
-    suspend fun updateCamion(camion: CamionItem): CamionItem? {
-        /*
-        try {
-            val response = retrofitApi.updateCamion(camion.ID, camion)
-            if (response.isSuccessful) {
-                return response.body()
+    suspend fun updateCamion(camion: CamionRequest): CamionRequest? {
+
+        if(isConectado){
+            try {
+                val response = retrofitApi.updateCamion(camion.ID, camion)
+                if (response.isSuccessful) {
+                    isConectado = true
+                    MyAppConfig.setConnectionStatus(true)
+                    return response.body()
+                } else {
+                    Log.e("API", "Response not successful: ${response.code()} - ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e("API", "Error fetching data from API: ${e.message}")
             }
-        } catch (e: Exception) {
-            Log.e("API", "Error fetching data from API: ${e.message}")
+            isConectado = false
+            MyAppConfig.setConnectionStatus(false)
+            return null
+        }else{
+            try {
+                val response = retrofitApi.updateCamion(camion.ID, camion)
+                if (response.isSuccessful) {
+                    isConectado = true
+                    MyAppConfig.setConnectionStatus(true)
+                    return response.body()
+                } else {
+                    Log.e("API", "Response not successful: ${response.code()} - ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e("API", "Error fetching data from API: ${e.message}")
+            }
+            // Si falla la llamada a la API, no se puede actualizar el camión
+            val camionItem = CamionItem(
+                ID = camion.ID,
+                color = camion.color,
+                conductor = camion.conductor,
+                dimension = camion.dimension,
+                marca = camion.marca,
+                matricula = camion.matricula,
+                modelo = camion.modelo,
+                tipo = camion.tipo,
+                yearOperative = camion.operativo
+            )
+            MyAppConfig.setConnectionStatus(false)
+            localRepository.update(camionItem)
+            return null
         }
-         */
-        // Si falla la llamada a la API, no se puede actualizar el camión
-        MyAppConfig.setConnectionStatus(false)
-        localRepository.update(camion)
-        return null
     }
 
     suspend fun deleteCamionById(id: Int): Boolean {
-        /*
-        try {
-            val response = retrofitApi.deleteCamion(id)
-            if (response.isSuccessful) {
-                return true
+        if(isConectado){
+            try {
+                val response = retrofitApi.deleteCamion(id)
+                if (response.isSuccessful) {
+                    isConectado = true
+                    MyAppConfig.setConnectionStatus(true)
+                    return true
+                } else {
+                    Log.e("API", "Response not successful: ${response.code()} - ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e("API", "Error fetching data from API: ${e.message}")
             }
-        } catch (e: Exception) {
-            Log.e("API", "Error fetching data from API: ${e.message}")
+            isConectado = false
+            MyAppConfig.setConnectionStatus(false)
+            return false
+        }else{
+            try {
+                val response = retrofitApi.deleteCamion(id)
+                if (response.isSuccessful) {
+                    isConectado = true
+                    MyAppConfig.setConnectionStatus(true)
+                    return true
+                } else {
+                    Log.e("API", "Response not successful: ${response.code()} - ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e("API", "Error fetching data from API: ${e.message}")
+            }
+            // Si falla la llamada a la API, no se puede eliminar el camión
+            MyAppConfig.setConnectionStatus(false)
+            localRepository.deleteCamionById(id)
+            return false
         }
-         */
-        // Si falla la llamada a la API, no se puede eliminar el camión
-        MyAppConfig.setConnectionStatus(false)
-        localRepository.deleteCamionById(id)
-        return false
     }
 }
