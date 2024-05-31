@@ -6,7 +6,10 @@ import androidx.lifecycle.LiveData
 import com.example.camionapi.models.camion.CamionDao
 import com.example.camionapi.models.camion.CamionItem
 import com.example.camionapi.models.camion.CamionRequest
+import com.example.camionapi.models.random.Cuenta
+import com.example.camionapi.models.random.Resultt
 import com.example.camionapi.network.CamionApi
+import com.example.camionapi.network.Login
 import com.example.camionapi.utils.MyAppConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -16,7 +19,8 @@ import kotlinx.coroutines.flow.toList
 
 class CombinedCamionRepository(
     private val retrofitApi: CamionApi,
-    private val localRepository: CamionRepository
+    private val localRepository: CamionRepository,
+    private val loginRepository: Login
 ) {
     var isConectado : Boolean = false
 
@@ -223,5 +227,37 @@ class CombinedCamionRepository(
             localRepository.deleteCamionById(id)
             return false
         }
+    }
+
+    suspend fun performLogin(cuenta : Cuenta) : Resultt? {
+        checkConnection()
+        if(!isConectado){
+            return Resultt("Error: no hay conexion disponible")
+        }
+        Log.d("Api","user: ${cuenta.usuario} pass: ${cuenta.password}")
+        val loginResponse = loginRepository.login(cuenta)
+        if (!loginResponse.isSuccessful) {
+            return Resultt("Error al iniciar sesión: ${loginResponse.errorBody()?.string()}")
+        }
+        val resultado = loginResponse.body()
+        if (resultado != null) {
+            MyAppConfig.setToken(resultado.token)
+        }
+        return resultado ?: null
+    }
+
+    suspend fun verifyToken() : Boolean{
+        checkConnection()
+        if(!isConectado){
+            MyAppConfig.validToken(false)
+            return false
+        }
+        val resultado = loginRepository.verify("Bearer "+MyAppConfig.token.toString())
+        if(resultado != null){
+            MyAppConfig.validToken(true)
+            return true
+        }
+        MyAppConfig.validToken(false)
+        return false
     }
 }

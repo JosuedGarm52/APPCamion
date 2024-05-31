@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.camionapi.models.camion.CamionItem
+import com.example.camionapi.models.random.Cuenta
+import com.example.camionapi.models.random.Resultt
 import com.example.camionapi.repository.CombinedCamionRepository
 import kotlinx.coroutines.launch
 
@@ -20,6 +22,10 @@ class MainActivityViewModel(private val repository: CombinedCamionRepository) : 
 
     fun isConnected() = viewModelScope.launch{
         repository.checkConnection()
+    }
+
+    suspend fun loggin(cuenta: Cuenta): Resultt? {
+        return repository.performLogin(cuenta)
     }
 }
 class MainActivityViewModelFactory(private val repository: CombinedCamionRepository) : ViewModelProvider.Factory {

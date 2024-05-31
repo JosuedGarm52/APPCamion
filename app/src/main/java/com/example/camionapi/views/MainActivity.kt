@@ -14,13 +14,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.camionapi.R
 import com.example.camionapi.application.CamionApplication
+import com.example.camionapi.models.random.Cuenta
 import com.example.camionapi.utils.MensajeRapido
+import com.example.camionapi.utils.MyAppConfig
 import com.example.camionapi.viewModel.MainActivityViewModel
 import com.example.camionapi.viewModel.MainActivityViewModelFactory
 import com.example.camionapi.viewModel.SecondFragmentViewModel
 import com.example.camionapi.viewModel.SecondFragmentViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -67,16 +73,24 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.btnLogin.setOnClickListener(View.OnClickListener {
-            if (binding.edtUsername.text.toString() == "" && binding.edtPassword.text.toString() == ""){
+            val user = binding.edtUsername.text.toString()
+            val contra = binding.edtPassword.text.toString()
+            if (user.isNullOrEmpty() && contra.isNullOrEmpty()){
                 Toast.makeText(this, "Los campos estan vacios", Toast.LENGTH_SHORT).show()
-            }else if(binding.edtUsername.text.toString() != "superuser" && binding.edtPassword.text.toString() != "admin"){
-                Toast.makeText(this, "El username o password no son correctas", Toast.LENGTH_SHORT).show()
             }else{
-                // Llamar a la función isConnected para verificar la conexión
-                viewModel.isConnected()
-
-                val intent = Intent(this, PortalActivity::class.java)
-                startActivity(intent)
+                lifecycleScope.launch {
+                    val resultado = viewModel.loggin(Cuenta(user, contra))
+                    if(resultado !=null){
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(this@MainActivity, resultado.message, Toast.LENGTH_SHORT).show()
+                        }
+                        if(resultado.message == "Inicio de sesión exitoso"){
+                            // Navegar a PortalActivity
+                            val intent = Intent(this@MainActivity, PortalActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                }
             }
         })
     }
