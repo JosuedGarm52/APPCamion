@@ -98,7 +98,7 @@ class CombinedCamionRepository(
     suspend fun addCamion(camion: CamionRequest): CamionRequest? {
         if(isConectado){
             try {
-                val response = retrofitApi.addCamion(camion)
+                val response = retrofitApi.addCamion("Bearer "+MyAppConfig.token.value,camion)
                 if (response.isSuccessful) {
                     isConectado = true
                     MyAppConfig.setConnectionStatus(true)
@@ -114,7 +114,7 @@ class CombinedCamionRepository(
             return null
         }else{
             try {
-                val response = retrofitApi.addCamion(camion)
+                val response = retrofitApi.addCamion("Bearer "+MyAppConfig.token.value,camion)
                 if (response.isSuccessful) {
                     isConectado = true
                     MyAppConfig.setConnectionStatus(true)

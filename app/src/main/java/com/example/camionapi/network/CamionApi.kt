@@ -9,6 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.DELETE
+import retrofit2.http.Header
 import retrofit2.http.Path
 
 interface CamionApi {
@@ -19,7 +20,7 @@ interface CamionApi {
     suspend fun getCamionById(@Path("id") id: Int): Response<CamionItem>
 
     @POST("camion")
-    suspend fun addCamion(@Body camion: CamionRequest): Response<CamionRequest>
+    suspend fun addCamion(@Header("Authorization") token: String, @Body camion: CamionRequest): Response<CamionRequest>
 
     @PUT("camion/{id}")
     suspend fun updateCamion(@Path("id") id: Int, @Body camion: CamionRequest): Response<CamionRequest>
