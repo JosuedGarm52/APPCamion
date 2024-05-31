@@ -16,6 +16,9 @@ class PortalActivityViewModel(
     fun isConnected() = viewModelScope.launch {
         repository.checkConnection()
     }
+    fun isTokenValid() = viewModelScope.launch {
+        repository.verifyToken()
+    }
 
     fun deleteDatabase() {
         viewModelScope.launch {

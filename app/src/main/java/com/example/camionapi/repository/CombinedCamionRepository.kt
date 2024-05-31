@@ -252,7 +252,13 @@ class CombinedCamionRepository(
             MyAppConfig.validToken(false)
             return false
         }
-        val resultado = loginRepository.verify("Bearer "+MyAppConfig.token.toString())
+        //Log.d("Api_verifyToken",""+MyAppConfig.token.value)
+        val resultado = loginRepository.verify("Bearer "+MyAppConfig.token.value)
+        if (!resultado.isSuccessful) {
+            //Log.e("Api_verify2",""+resultado.errorBody()?.string())
+            MyAppConfig.validToken(false)
+            return false
+        }
         if(resultado != null){
             MyAppConfig.validToken(true)
             return true

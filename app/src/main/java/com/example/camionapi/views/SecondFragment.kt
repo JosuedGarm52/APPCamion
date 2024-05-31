@@ -1,6 +1,7 @@
 package com.example.camionapi.views
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.annotation.Dimension
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.camionapi.R
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,11 +21,14 @@ import com.example.camionapi.application.CamionApplication
 import com.example.camionapi.databinding.FragmentSecondBinding
 import com.example.camionapi.models.camion.Camion
 import com.example.camionapi.models.camion.CamionItem
+import com.example.camionapi.utils.MyAppConfig
 import com.example.camionapi.viewModel.FirstFragmentViewModel
 import com.example.camionapi.viewModel.FirstFragmentViewModelFactory
 import com.example.camionapi.viewModel.SecondFragmentViewModel
 import com.example.camionapi.viewModel.SecondFragmentViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import java.util.Timer
+import java.util.TimerTask
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -35,6 +40,8 @@ class SecondFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var viewModel : SecondFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,10 +74,13 @@ class SecondFragment : Fragment() {
             spinner.adapter = adapter
         }
 
+
         val combinedRepository = (requireActivity().application as CamionApplication).combinedRepository
         val secondFragmentViewModel: SecondFragmentViewModel by viewModels {
             SecondFragmentViewModelFactory(combinedRepository)
         }
+        viewModel = secondFragmentViewModel
+        secondFragmentViewModel.isTokenValid()
 
         //binding.edtID.isEnabled = true
         binding.btnBorrar.isEnabled = true
@@ -168,7 +178,24 @@ class SecondFragment : Fragment() {
             }
         }
 
-
+        MyAppConfig.isTokenValid.observe(viewLifecycleOwner, Observer {
+            //Log.d("isValid_second","resultado : $it")
+            if (!it && MyAppConfig.isConect.value == true){
+                MyAppConfig.setToken("")
+                val intent = Intent(requireActivity(), MainActivity::class.java)
+                startActivity(intent)
+            }
+        })
+        ejecutarCadaMinuto()
+    }
+    fun ejecutarCadaMinuto() {
+        val timer = Timer()
+        val timerTask = object : TimerTask() {
+            override fun run() {
+               viewModel.isTokenValid()
+            }
+        }
+        timer.scheduleAtFixedRate(timerTask, 0, 60000) // 60000 milisegundos = 1 minuto
     }
 
     override fun onDestroyView() {

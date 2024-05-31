@@ -1,6 +1,7 @@
 package com.example.camionapi.views
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.example.camionapi.application.CamionApplication
 import com.example.camionapi.databinding.FragmentFirstBinding
 import com.example.camionapi.models.camion.CamionItem
 import com.example.camionapi.repository.CombinedCamionRepository
+import com.example.camionapi.utils.MyAppConfig
 import com.example.camionapi.viewModel.FirstFragmentViewModel
 import com.example.camionapi.viewModel.FirstFragmentViewModelFactory
 
@@ -69,8 +71,6 @@ class FirstFragment : Fragment() {
         }catch(e: Exception){
             Log.e("FirstFragment", "Error al observar camionKardex: ${e.message}", e)
         }
-
-
     }
 
     private fun onItemClick(it: CamionItem) {

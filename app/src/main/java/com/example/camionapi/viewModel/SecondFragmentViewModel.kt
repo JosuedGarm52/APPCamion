@@ -55,6 +55,10 @@ class SecondFragmentViewModel (private val repository: CombinedCamionRepository)
     fun deleteCamionById(id: Int) = viewModelScope.launch {
         repository.deleteCamionById(id)
     }
+
+    fun isTokenValid() = viewModelScope.launch {
+        repository.verifyToken()
+    }
 }
 
 class SecondFragmentViewModelFactory(private val repository: CombinedCamionRepository) : ViewModelProvider.Factory {

@@ -30,7 +30,6 @@ class FirstFragmentViewModel(private val repository: CombinedCamionRepository) :
             }
         }
     }
-
 }
 
 class FirstFragmentViewModelFactory(private val repository: CombinedCamionRepository) : ViewModelProvider.Factory {

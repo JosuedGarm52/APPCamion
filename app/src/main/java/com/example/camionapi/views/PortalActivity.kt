@@ -94,7 +94,7 @@ class PortalActivity : AppCompatActivity() {
         }
         // Observa cambios en isConect y actualiza la imagen
         observeConnectionStatus()
-
+        portalActivityViewModel.isTokenValid()
 
     }
     private fun observeConnectionStatus() {
@@ -129,6 +129,7 @@ class PortalActivity : AppCompatActivity() {
             }
             R.id.action_logout -> {
                 // Lógica para abrir la pantalla de ajustes
+                MyAppConfig.setToken("")
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 true
